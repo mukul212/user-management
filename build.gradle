@@ -1,0 +1,49 @@
+group 'com.mukul'
+version '1.0-SNAPSHOT'
+buildscript {
+    ext {
+        springBootVersion = '1.5.4.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+apply plugin: 'idea'
+apply plugin: 'groovy'
+apply plugin: 'java'
+apply plugin: 'spring-boot'
+
+sourceCompatibility = 11
+targetCompatibility = 11
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-actuator')
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile('org.springframework.boot:spring-boot-starter-data-rest')
+    compile('org.springframework.data:spring-data-rest-hal-browser')
+    compile('org.springframework.boot:spring-boot-starter-hateoas')
+    compile('org.projectlombok:lombok:1.16.6')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-logging')
+
+    compile('org.hibernate:hibernate-core:4.3.11.Final')
+//    compile('org.hibernate:hibernate-entitymanager:4.3.11.Final')
+//    compile('org.hibernate:hibernate-validator:5.2.4.Final')
+    compile('com.h2database:h2:1.4.191')
+
+    compile('org.jasypt:jasypt:1.9.2')
+    compile('org.jasypt:jasypt-hibernate4:1.9.2')
+    compile('org.bouncycastle:bcprov-jdk15on:1.54')
+
+    testCompile('org.hibernate:hibernate-testing:5.1.0.Final')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.codehaus.groovy:groovy-all:2.3.11')
+    testCompile('junit:junit:4.12')
+}
