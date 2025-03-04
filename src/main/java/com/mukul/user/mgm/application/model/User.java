@@ -19,7 +19,6 @@ public class User {
     @Id
     @Column(name = "user_name")
     private String userName;
-    @Type(type = "encryptedString")
     @Column(name = "password")
     private String passWord;
     @Column(name = "role")

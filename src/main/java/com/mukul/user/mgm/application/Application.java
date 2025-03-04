@@ -1,6 +1,5 @@
 package com.mukul.user.mgm.application;
 
-import com.mukul.user.mgm.application.config.H2WebConsoleConfiguration;
 import com.mukul.user.mgm.application.config.JpaConfig;
 import com.mukul.user.mgm.application.model.User;
 import com.mukul.user.mgm.application.repository.UserRepository;
@@ -19,18 +18,18 @@ public class Application implements CommandLineRunner {
 
 
     public static void main(String[] args) {
-        SpringApplication.run(new Class<?>[]{Application.class, JpaConfig.class, H2WebConsoleConfiguration.class}, args);
+        SpringApplication.run(new Class<?>[]{Application.class, JpaConfig.class}, args);
     }
 
     @Override
     public void run(String... args) throws Exception {
-        List<User> initialUsers = Arrays.asList(
-                new User("user", "user", "user"),
-                new User("Jinny", "jinny2016", "user"),
-                new User("Jill", "jillisthebest", "user"),
-                new User("James", "workharddiejong", "user"),
-                new User("admin", "admin", "admin")
-        );
-        userRepository.save(initialUsers);
+//        List<User> initialUsers = Arrays.asList(
+//                new User("user", "user", "user"),
+//                new User("Jinny", "jinny2016", "user"),
+//                new User("Jill", "jillisthebest", "user"),
+//                new User("James", "workharddiejong", "user"),
+//                new User("admin", "admin", "admin")
+//        );
+//        userRepository.save(initialUsers);
     }
 }

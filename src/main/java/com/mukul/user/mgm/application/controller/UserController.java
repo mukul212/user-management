@@ -40,19 +40,19 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/user/new", method = RequestMethod.POST)
-    public ResponseEntity<Void> createUser(@RequestBody User user, UriComponentsBuilder ucBuilder) {
-        System.out.println("Creating User " + user.getUserName());
-
-        if (userRepository.exists(user.getUserName())) {
-            System.out.println("A User with name " + user.getUserName() + " already exist");
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
-        }
-
-        userRepository.save(user);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/user/{userName}").buildAndExpand(user.getUserName()).toUri());
-        return new ResponseEntity<>(headers, HttpStatus.CREATED);
-    }
+//    @RequestMapping(value = "/user/new", method = RequestMethod.POST)
+//    public ResponseEntity<Void> createUser(@RequestBody User user, UriComponentsBuilder ucBuilder) {
+//        System.out.println("Creating User " + user.getUserName());
+//
+//        if (userRepository.exists(user.getUserName())) {
+//            System.out.println("A User with name " + user.getUserName() + " already exist");
+//            return new ResponseEntity<>(HttpStatus.CONFLICT);
+//        }
+//
+//        userRepository.save(user);
+//
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setLocation(ucBuilder.path("/user/{userName}").buildAndExpand(user.getUserName()).toUri());
+//        return new ResponseEntity<>(headers, HttpStatus.CREATED);
+//    }
 }
