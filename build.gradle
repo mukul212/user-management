@@ -13,11 +13,26 @@ buildscript {
 
 plugins {
     id 'application'
+    id 'jacoco'
     id "org.sonarqube" version "2.7.1"
 }
 
 application {
     mainClassName = 'com.mukul.user.mgm.application.Application' // Set this correctly
+}
+
+jacoco {
+    toolVersion = "0.8.10" // Ensure this is the latest
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "AI-Test"
+        property "sonar.organization", "AI-Test"  // Only needed for SonarCloud
+        property "sonar.host.url", "http://localhost:9000" // Adjust if using a different server
+        property "sonar.token", "sqp_aeec44b498380835c636f59cf1c5d58de67af57b" // Required if authentication is enabled
+        property "sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
+    }
 }
 
 group 'com.mukul'
@@ -56,8 +71,44 @@ dependencies {
     compile('org.jasypt:jasypt-hibernate4:1.9.2')
     compile('org.bouncycastle:bcprov-jdk15on:1.54')
 
+    implementation 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
+    testImplementation 'org.projectlombok:lombok:1.18.30'
+
+//    // JUnit 5 (Jupiter API and Engine)
+//    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+//    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+//
+//    // Mockito for unit testing
+//    testImplementation 'org.mockito:mockito-core:5.5.0'
+
+    // JUnit 5 (Jupiter API and Engine)
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+
+    // Mockito Core
+    testImplementation 'org.mockito:mockito-core:5.5.0'
+
+    // Mockito JUnit 5 Extension
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.5.0'
+
     testCompile('org.hibernate:hibernate-testing:5.1.0.Final')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.codehaus.groovy:groovy-all:2.5.14')
-    testCompile('junit:junit:4.12')
+    testCompile('junit:junit:4.13.1')
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport // Generate report after tests run
+}
+
+jacocoTestReport {
+    dependsOn test
+
+    reports {
+        xml.enabled true // Required for SonarQube
+        csv.enabled false
+        html.enabled true // Optional, human-readable report
+    }
 }

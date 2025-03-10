@@ -1,6 +1,6 @@
 package com.mukul.user.mgm.application;
 
-import com.mukul.user.mgm.application.config.JpaConfig;
+//import com.mukul.user.mgm.application.config.JpaConfig;
 import com.mukul.user.mgm.application.model.User;
 import com.mukul.user.mgm.application.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public class Application implements CommandLineRunner {
 
 
     public static void main(String[] args) {
-        SpringApplication.run(new Class<?>[]{Application.class, JpaConfig.class}, args);
+        SpringApplication.run(new Class<?>[]{Application.class}, args);
     }
 
     @Override
