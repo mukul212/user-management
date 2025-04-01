@@ -2,6 +2,7 @@ package com.mukul.user.mgm.application.controller;
 
 import com.mukul.user.mgm.application.model.User;
 import com.mukul.user.mgm.application.repository.UserRepository;
+import com.mukul.user.mgm.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,10 +17,12 @@ import java.util.List;
 @RequestMapping("/api")
 public class UserController {
     private final UserRepository userRepository;
+    private final UserService userService;
 
     @Autowired
-    public UserController(UserRepository userRepository) {
+    public UserController(UserRepository userRepository, UserService userService) {
         this.userRepository = userRepository;
+        this.userService = userService;
     }
 
     @RequestMapping(value = "/users/{role}", method = RequestMethod.GET)
@@ -54,5 +57,14 @@ public class UserController {
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/user/{userName}").buildAndExpand(user.getUserName()).toUri());
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    public ResponseEntity<List<User>> getAllUsers() throws Exception {
+        List<User> users = userService.getAllUsers();
+        if (CollectionUtils.isEmpty(users)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 }

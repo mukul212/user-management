@@ -42,8 +42,14 @@ dependencies {
     compile('org.jasypt:jasypt-hibernate4:1.9.2')
     compile('org.bouncycastle:bcprov-jdk15on:1.54')
 
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.15.0'
+
     testCompile('org.hibernate:hibernate-testing:5.1.0.Final')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.codehaus.groovy:groovy-all:2.3.11')
     testCompile('junit:junit:4.12')
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testImplementation 'org.mockito:mockito-junit-jupiter:3.12.4'
+    testImplementation 'org.mockito:mockito-core:3.12.4'
 }
