@@ -1,8 +1,8 @@
 package com.mukul.user.mgm.application.service;
 
+import com.mukul.user.mgm.application.exception.UserException;
 import com.mukul.user.mgm.application.model.User;
 import com.mukul.user.mgm.application.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -11,23 +11,26 @@ import java.util.List;
 @Service
 public class UserService {
 
-    @Autowired
     private UserRepository userRepository;
 
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     // Retrieve all users
-    public List<User> getAllUsers() throws Exception {
+    public List<User> getAllUsers() throws UserException {
         List<User> users = userRepository.findAll();
         if (CollectionUtils.isEmpty(users)) {
-            throw new Exception("No users found");
+            throw new UserException("No users found");
         }
         return users;
     }
 
     // Retrieve a user by userName
-    public User getUserByUserName(String userName) throws Exception {
+    public User getUserByUserName(String userName) throws UserException {
         User user = userRepository.findByUserName(userName);
         if (user == null) {
-            throw new Exception("User not found with userName: " + userName);
+            throw new UserException("User not found with userName: " + userName);
         }
         return user;
     }
@@ -38,10 +41,10 @@ public class UserService {
     }
 
     // Update an existing user's details
-    public User updateUser(String userName, User updatedUser) throws Exception {
+    public User updateUser(String userName, User updatedUser) throws UserException {
         User existingUser = userRepository.findByUserName(userName);
         if (existingUser == null) {
-            throw new Exception("User not found with userName: " + userName);
+            throw new UserException("User not found with userName: " + userName);
         }
 
         // Update mutable fields (e.g., password and role)
@@ -52,10 +55,10 @@ public class UserService {
     }
 
     // Delete a user by their userName
-    public void deleteUser(String userName) throws Exception {
+    public void deleteUser(String userName) throws UserException {
         User existingUser = userRepository.findByUserName(userName);
         if (existingUser == null) {
-            throw new Exception("User not found with userName: " + userName);
+            throw new UserException("User not found with userName: " + userName);
         }
         userRepository.delete(existingUser);
     }
